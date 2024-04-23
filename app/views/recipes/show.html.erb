@@ -5,6 +5,20 @@
     <% end %>
 
     <%= render @recipe %>
+    <!-- app/views/recipes/show.html.erb -->
+    <div class="my-5">
+      <h3 class="font-bold text-xl">Ingredients</h3>
+
+      <%= render "ingredients/form", ingredient: @ingredient %>
+
+      <%- @recipe.ingredients.each do |ingredient|%>
+        <%= render ingredient %>
+        <% if ingredient.photo.attached? %>
+          <%= image_tag ingredient.photo %>
+        <% end %>
+      <% end %>
+    </div>
+
 
     <%= link_to 'Edit this recipe', edit_recipe_path(@recipe), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <div class="inline-block ml-2">
