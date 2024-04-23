@@ -9,13 +9,18 @@
     <div class="my-5">
       <h3 class="font-bold text-xl">Ingredients</h3>
 
-      <%= render "ingredients/form", ingredient: @ingredient %>
+      <%= render "ingredients/form", ingredient: @ingredient unless @recipe.ingredients.size >= 3 %>
 
-      <%- @recipe.ingredients.each do |ingredient|%>
+      <% @recipe.ingredients.each_with_index do |ingredient, index| %>
         <%= render ingredient %>
         <% if ingredient.photo.attached? %>
           <%= image_tag ingredient.photo %>
         <% end %>
+        <% break if index == 3 %> <!-- Limit the display to 3 ingredients -->
+      <% end %>
+
+      <% if @recipe.ingredients.size > 3 %>
+        <p class="text-red-500">Maximum number of ingredients reached.</p>
       <% end %>
     </div>
 
